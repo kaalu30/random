@@ -1,0 +1,582 @@
+
+question 1
+function wait(ms){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            res();
+        },ms)
+    })
+}
+wait(2000).then(()=>{
+    console.log("Wait")
+})
+
+question 2
+function countdown(number){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            console.log(number)
+            res();
+        },1000)
+     
+    })
+}
+countdown(3)
+.then(()=>
+    countdown(2)
+)
+ .then(()=>
+    countdown(1)
+)
+.then(()=>{
+    console.log("Lift off!")
+})
+
+question 3
+
+function delayedMessage(message,ms,shouldCancel){
+     return new Promise((res,reject)=>{
+         setTimeout(()=>{
+             if(shouldCancel){
+                reject("Operation canclled")
+             }
+             res(message);
+         },ms)
+     })
+ }
+delayedMessage("hello",5000,false).then((e)=>{
+    console.log(e)
+})
+.catch((e)=>{
+    console.log(e)
+})
+
+question 4
+
+function math(){
+return new Promise ((res,reject)=>{
+   res(10)
+})
+   
+}
+math().then((e)=>{
+    return e*3
+    
+})
+.then((e)=>{
+    return e+4;
+})
+.then((e)=>{
+    return e/2
+})
+.then((e)=>{
+    console.log(e)
+})
+
+
+question 5
+
+function fetchItem(itemName,delay){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            res(itemName)
+        },delay)
+    })
+}
+fetchItem("User",1000).then((e)=>{
+    console.log(e);
+   return fetchItem("Posts",2000)
+})
+.then((e)=>{
+    console.log(e)
+    return fetchItem("Comments",1500)
+})
+.then((e)=>{
+    console.log(e)
+})
+
+Question 6
+
+function stp1(){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            res("Step1 Done")
+        },1000)
+    })
+}
+function stp2(){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            res("Step2 Done")
+        },1000)
+    })
+}
+function stp3(){
+    return new Promise((res,reject)=>{
+        setTimeout(()=>{
+            res("Step3 Done")
+        },1000)
+    })
+}
+
+Question 7
+
+function userAva(name){
+    return new Promise((res,reject)=>{
+        if(name=="admin"){
+            reject("name is taken")
+        }
+        res(true)
+    })
+}
+
+async function check(name){
+    try{
+        await userAva(name);
+        console.log("Available");
+    }catch(error){
+        console.log("error",error);
+    }
+}
+check("raju")
+
+Question 8
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Async function to log time before and after a delay
+async function timeLogger() {
+  console.log("Start Time:", new Date().toLocaleTimeString());
+  await wait(2000); // Wait for 2 seconds
+  console.log("End Time:  ", new Date().toLocaleTimeString());
+}
+
+// Run the function
+timeLogger();
+
+Question 9
+
+import React, { useState } from 'react';
+
+function ToggleMessage() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleToggle = () => {
+    setIsVisible(prev => !prev);
+  };
+
+  return (
+    <div>
+      <button onClick={handleToggle}>Show/Hide Message</button>
+      {isVisible && <p>Hello, this is a message!</p>}
+    </div>
+  );
+}
+
+export default ToggleMessage;
+
+
+Question 10
+
+import React, { useState } from 'react';
+
+function TextInputDisplay() {
+  const [text, setText] = useState('');
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={text}
+        onChange={handleChange}
+        placeholder="Type something..."
+      />
+      <p>You typed: {text}</p>
+    </div>
+  );
+}
+
+export default TextInputDisplay;
+
+
+Question 11
+
+import React, { useState } from 'react';
+
+function ClickTracker() {
+  const [clickCount, setClickCount] = useState(0);
+
+  const handleClick = () => {
+    setClickCount(prevCount => prevCount + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Click me!</button>
+      <p>You clicked {clickCount} {clickCount === 1 ? 'time' : 'times'}</p>
+    </div>
+  );
+}
+
+export default ClickTracker;
+
+Question 12
+
+import React, { useState } from 'react';
+
+function SimpleForm() {
+  const [name, setName] = useState('');
+  const [submittedName, setSubmittedName] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevents page reload
+    setSubmittedName(name); // Set submitted name
+    setName(''); // Clear the input
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {submittedName && <p>Submitted: {submittedName}</p>}
+    </div>
+  );
+}
+
+export default SimpleForm;
+
+Question 13 
+
+import React, { useState } from 'react';
+
+function CharacterCounter() {
+  const [inputText, setInputText] = useState('');
+
+  const handleChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  return (
+    <div>
+      <textarea
+        value={inputText}
+        onChange={handleChange}
+        placeholder="Type something..."
+        rows={4}
+        cols={40}
+      />
+      <p>Character count: {inputText.length}</p>
+    </div>
+  );
+}
+
+export default CharacterCounter;
+
+Question 14
+
+import React, { useEffect, useState } from 'react';
+
+function UserProfile() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+      .then(response => response.json())
+      .then(data => {
+        setName(data.name);
+        setEmail(data.email);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []); // Empty dependency array ensures this runs once on mount
+
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <p>Name: {name || 'Loading...'}</p>
+      <p>Email: {email || 'Loading...'}</p>
+    </div>
+  );
+}
+
+export default UserProfile;
+
+
+Question 15
+
+import React, { useState, useEffect } from 'react';
+
+function PersistentInput() {
+  const [text, setText] = useState('');
+
+  // Load saved text from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem('savedText');
+    if (saved) {
+      setText(saved);
+    }
+  }, []);
+
+  // Save text to localStorage on every change
+  useEffect(() => {
+    localStorage.setItem('savedText', text);
+  }, [text]);
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  return (
+    <div>
+      <input 
+        type="text"
+        value={text}
+        onChange={handleChange}
+        placeholder="Type something..."
+      />
+      <p>Saved text: {text}</p>
+    </div>
+  );
+}
+
+export default PersistentInput;
+
+Question 16
+
+import React, { useState, useEffect } from 'react';
+
+function PostsFetcher() {
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (shouldFetch) {
+      setLoading(true);
+      fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+        .then(res => res.json())
+        .then(data => {
+          setPosts(data);
+          setLoading(false);
+          setShouldFetch(false); // Reset fetch trigger
+        })
+        .catch(error => {
+          console.error('Error fetching posts:', error);
+          setLoading(false);
+          setShouldFetch(false);
+        });
+    }
+  }, [shouldFetch]);
+
+  const handleClick = () => {
+    setShouldFetch(true);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Load Posts</button>
+
+      {loading && <p>Loading...</p>}
+
+      {!loading && posts.length > 0 && (
+        <ul>
+          {posts.map(post => (
+            <li key={post.id}>{post.title}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default PostsFetcher;
+
+Question 17
+
+import React, { useState, useEffect } from 'react';
+
+function ThemeToggler() {
+  const [theme, setTheme] = useState('light');
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Save theme to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <div style={{
+      background: theme === 'light' ? '#fff' : '#333',
+      color: theme === 'light' ? '#000' : '#fff',
+      padding: '1rem',
+      minHeight: '100vh',
+      transition: 'all 0.3s ease',
+    }}>
+      <button onClick={toggleTheme}>
+        Toggle Theme
+      </button>
+      <p>Current theme: <strong>{theme}</strong></p>
+    </div>
+  );
+}
+
+export default ThemeToggler;
+
+Question 18
+
+
+function calculateArea(width: number, height: number): number {
+  return width * height;
+}
+
+// Valid usage:
+const area1 = calculateArea(5, 10);  // 50
+console.log('Area1:', area1);
+
+Question 19
+
+// Define the User interface
+interface User {
+  id: number;
+  name: string;
+  isActive: boolean;
+}
+
+// Function that accepts a User and logs info
+function printUser(user: User): void {
+  console.log(`User Info:
+  ID: ${user.id}
+  Name: ${user.name}
+  Active: ${user.isActive ? 'Yes' : 'No'}`);
+}
+
+// Sample user object
+const sampleUser: User = {
+  id: 1,
+  name: 'Alice',
+  isActive: true,
+};
+
+// Call the function with the sample user
+printUser(sampleUser);
+
+Question 20
+
+function printValue(value: string | number): void {
+  if (typeof value === 'string') {
+    console.log(value.toUpperCase());
+  } else if (typeof value === 'number') {
+    console.log(value * 2);
+  }
+}
+
+// Usage examples:
+printValue("hello"); // Output: HELLO
+printValue(21);      // Output: 42
+
+Question 21
+
+// Define the Product type
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+// Create an array of products
+const products: Product[] = [
+  { id: 1, name: 'Laptop', price: 999 },
+  { id: 2, name: 'Smartphone', price: 699 },
+  { id: 3, name: 'Tablet', price: 499 },
+];
+
+// Function to log each product's name and price
+function logProducts(products: Product[]): void {
+  products.forEach(product => {
+    console.log(`Product: ${product.name}, Price: $${product.price}`);
+  });
+}
+
+// Call the function
+logProducts(products);
+
+Question 22
+html
+<div id="greeting">Original greeting</div>
+react
+function updateGreeting(text: string): void {
+  const greetingElement = document.getElementById('greeting');
+  if (greetingElement) {
+    greetingElement.textContent = text;
+  } else {
+    console.warn('Element with id "greeting" not found.');
+  }
+}
+
+// Call the function with a custom greeting
+updateGreeting('Hello, welcome to TypeScript!');
+
+Question 23
+
+Html
+<button id="toggleBtn">Toggle Class</button>
+<div id="box">This is the box</div>
+
+TypeScript
+function toggleClass(): void {
+  const box = document.getElementById('box');
+  if (box) {
+    box.classList.toggle('active');
+  } else {
+    console.warn('Element with id "box" not found.');
+  }
+}
+
+// Attach the event listener after DOM content loads
+document.addEventListener('DOMContentLoaded', () => {
+  const button = document.getElementById('toggleBtn');
+  if (button) {
+    button.addEventListener('click', toggleClass);
+  } else {
+    console.warn('Button with id "toggleBtn" not found.');
+  }
+});
+
+css
+#box {
+  width: 200px;
+  height: 100px;
+  background-color: lightgray;
+  transition: background-color 0.3s ease;
+}
+
+#box.active {
+  background-color: coral;
+}
+
